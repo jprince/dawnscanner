@@ -77,8 +77,8 @@ task :cve, :name do |t,args|
 
   raise "### It seems that #{name} is already in Dawn knowledge base" unless Dawn::KnowledgeBase.find(nil, name).nil?
   raise "### Invalid CVE title: #{name}" if name.nil? or name.empty? or /CVE-\d{4}-\d{4}/.match(name).nil?
-  raise "### No target directory: #{SRC_DIR}" unless Dir.exists?(SRC_DIR)
-  raise "### No rspec directory: #{SPEC_DIR}" unless Dir.exists?(SPEC_DIR)
+  raise "### No target directory: #{SRC_DIR}" unless Dir.exist?(SRC_DIR)
+  raise "### No rspec directory: #{SPEC_DIR}" unless Dir.exist?(SPEC_DIR)
 
   puts "Adding #{name} to knowledge base..."
 
@@ -146,8 +146,8 @@ task :osvdb, :name do |t,args|
 
   raise "### It seems that #{name} is already in Dawn knowledge base" unless Dawn::KnowledgeBase.find(nil, name).nil?
   raise "### Invalid OSVDB identifier: #{name}" if name.nil? or name.empty? or /\d{6}/.match(name).nil?
-  raise "### No target directory: #{SRC_DIR}" unless Dir.exists?(SRC_DIR)
-  raise "### No rspec directory: #{SPEC_DIR}" unless Dir.exists?(SPEC_DIR)
+  raise "### No target directory: #{SRC_DIR}" unless Dir.exist?(SRC_DIR)
+  raise "### No rspec directory: #{SPEC_DIR}" unless Dir.exist?(SPEC_DIR)
 
   puts "Adding #{name} to knowledge base..."
 
@@ -218,8 +218,8 @@ task :check, :name do |t,args|
   SPEC_DIR  = "./spec/lib/kb/"
 
   raise "### It seems that #{name} is already in Dawn knowledge base" unless Dawn::KnowledgeBase.find(nil, name).nil?
-  raise "### No target directory: #{SRC_DIR}" unless Dir.exists?(SRC_DIR)
-  raise "### No rspec directory: #{SPEC_DIR}" unless Dir.exists?(SPEC_DIR)
+  raise "### No target directory: #{SRC_DIR}" unless Dir.exist?(SRC_DIR)
+  raise "### No rspec directory: #{SPEC_DIR}" unless Dir.exist?(SPEC_DIR)
 
   puts "Adding #{name} to knowledge base..."
 
@@ -295,7 +295,7 @@ namespace :kb do
 
     Dawn::KnowledgeBase.new.all.each do |check|
       out_dir = File.join(YAML_KB, check.check_family.to_s)
-      FileUtils.mkdir_p(out_dir) unless Dir.exists? out_dir
+      FileUtils.mkdir_p(out_dir) unless Dir.exist? out_dir
 
       filename = File.join(out_dir, check.name.gsub(" ", "_").gsub("-", "_") + '.yml')
       open(filename, 'w') do |f|
@@ -392,35 +392,35 @@ namespace :rubysec do
 end
 
 def __kb_pack
-  if Dir.exists? "#{YAML_KB}/bulletin"
+  if Dir.exist? "#{YAML_KB}/bulletin"
     system "tar cfvz #{YAML_KB}/bulletin.tar.gz #{YAML_KB}/bulletin"
     system "rm -rf #{YAML_KB}/bulletin"
     system "shasum -a 256 #{YAML_KB}/bulletin.tar.gz > #{YAML_KB}/bulletin.tar.gz.sig"
   end
 
-  if Dir.exists? "#{YAML_KB}/generic_check"
+  if Dir.exist? "#{YAML_KB}/generic_check"
     system "tar cfvz #{YAML_KB}/generic_check.tar.gz #{YAML_KB}/generic_check"
     system "rm -rf #{YAML_KB}/generic_check"
     system "shasum -a 256 #{YAML_KB}/generic_check.tar.gz > #{YAML_KB}/generic_check.tar.gz.sig"
   end
 
-  if Dir.exists? "#{YAML_KB}/owasp_ror_cheatsheet"
+  if Dir.exist? "#{YAML_KB}/owasp_ror_cheatsheet"
     system "tar cfvz #{YAML_KB}/owasp_ror_cheatsheet.tar.gz #{YAML_KB}/owasp_ror_cheatsheet"
     system "rm -rf #{YAML_KB}/owasp_ror_cheatsheet"
     system "shasum -a 256 #{YAML_KB}/owasp_ror_cheatsheet.tar.gz > #{YAML_KB}/owasp_ror_cheatsheet.tar.gz.sig"
   end
 
-  if Dir.exists? "#{YAML_KB}/code_style"
+  if Dir.exist? "#{YAML_KB}/code_style"
     system "tar cfvz #{YAML_KB}/code_style.tar.gz #{YAML_KB}/code_style"
     system "rm -rf #{YAML_KB}/code_style"
     system "shasum -a 256 #{YAML_KB}/code_style.tar.gz > #{YAML_KB}/code_style.tar.gz.sig"
   end
-  if Dir.exists? "#{YAML_KB}/code_quality"
+  if Dir.exist? "#{YAML_KB}/code_quality"
     system "tar cfvz #{YAML_KB}/code_quality.tar.gz #{YAML_KB}/code_quality"
     system "rm -rf #{YAML_KB}/code_quality"
     system "shasum -a 256 #{YAML_KB}/code_quality.tar.gz > #{YAML_KB}/code_quality.tar.gz.sig"
   end
-  if Dir.exists? "#{YAML_KB}/owasp_top_10"
+  if Dir.exist? "#{YAML_KB}/owasp_top_10"
     system "tar cfvz #{YAML_KB}/owasp_top_10.tar.gz #{YAML_KB}/owasp_top_10"
     system "rm -rf #{YAML_KB}/owasp_top_10"
     system "shasum -a 256 #{YAML_KB}/owasp_top_10.tar.gz > #{YAML_KB}/owasp_top_10.tar.gz.sig"
